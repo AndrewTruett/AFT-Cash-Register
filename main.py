@@ -163,4 +163,3 @@ class LoginWindow(Tk):
         master.mainloop()
         
 LoginWindow(Tk())
-    
