@@ -14,8 +14,10 @@ class CashRegister(tk.Tk):
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+
+        #test - need to update
+        # container.grid_rowconfigure(0, weight=1)
+        # container.grid_columnconfigure(0, weight=1)
 
         '''self.frames = {}
         for F in (StartPage,PageOne,PageTwo):
@@ -33,9 +35,13 @@ class CashRegister(tk.Tk):
         #More frames go here
         scanFrame = ScanFrame(container, self)
         scanFrame.grid(row=0, column=0, sticky="NW")
+
+        ##Numpad Frame
+        numpadFrame = NumpadFrame(container,self)
+        numpadFrame.grid(row=2,column=0, sticky="NW")
         
         purchaseInfoFrame = PurchaseInfoFrame(container, self)
-        purchaseInfoFrame.grid(row=0, column=1, rowspan=4, sticky="NE")
+        purchaseInfoFrame.grid(row=0, column=3, rowspan=4, sticky="NE")
 
         #buttonFrame = ButtonFrame(container, self)
         #buttonFrame.grid(row=1, column=0, sticky="NW")
@@ -43,7 +49,7 @@ class CashRegister(tk.Tk):
         
 
         checkoutFrame = CheckoutFrame(container, self)
-        checkoutFrame.grid(row=5, column=1, sticky="N")
+        checkoutFrame.grid(row=5, column=3, sticky="N")
         
         
 
@@ -82,14 +88,61 @@ class ScanFrame(tk.Frame):
         self.custLookupButton.grid(row=0, column=1)'''
 
 class NumpadFrame(tk.Frame):
+
+    def button_press(self,value):
+        # Get the current value in the entry
+        entry = self.numpad_entry.get()
+        # Put the new value to the right of it
+        # If it was 1 and 2 is pressed it is now 12
+        # Otherwise the new number goes on the left
+        entry = entry+value
+
+        # Clear the entry box
+        self.numpad_entry.delete(0, "end")
+
+        # Insert the new value going from left to right
+        self.numpad_entry.insert(0, entry)
+
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         container = tk.Frame(self)
 
-        #Buttons
-        self.one = Button(self, text="1")
+        # Will hold the changing value stored in the entry
+        self.entry = StringVar(parent, value="")
 
-        
+        # Create the text entry box
+        self.numpad_entry = tk.Entry(self,
+                                      textvariable=self.entry)
+        self.numpad_entry.grid(row=0, columnspan=2)
+
+        #Buttons
+        #1st row
+        self.seven = Button(self,text="7",font=NORMAL_FONT, bg="white",height=3,width=5, command=lambda: self.button_press('7'))\
+            .grid(row=2,column=0,padx=3,pady=3)
+        self.eight = Button(self,text="8",font=NORMAL_FONT, bg="white",height=3,width=5, command=lambda: self.button_press('8'))\
+            .grid(row=2,column=1,padx=3,pady=3)
+        self.nine = Button(self,text="9",font=NORMAL_FONT, bg="white",height=3,width=5, command=lambda: self.button_press('9')).\
+            grid(row=2,column=2,padx=3,pady=3)
+
+        # 2nd row
+        self.four = Button(self, text="4", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('4')).\
+            grid(row=3, column=0,padx=3,pady=3)
+        self.five = Button(self, text="5", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('5')).\
+            grid(row=3, column=1,padx=3,pady=3)
+        self.six = Button(self, text="6", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('6')).\
+            grid(row=3, column=2,padx=3,pady=3)
+
+        # 3rd row
+        self.one = Button(self, text="1", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('1')).\
+            grid(row=4, column=0,padx=3,pady=3)
+        self.two = Button(self, text="2", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('2')).\
+            grid(row=4, column=1,padx=3,pady=3)
+        self.three = Button(self, text="3", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('3')).\
+            grid(row=4, column=2,padx=3,pady=3)
+
+
+
 
 class PurchaseInfoFrame(tk.Frame):
     def __init__(self, parent, controller):
