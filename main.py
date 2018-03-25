@@ -29,13 +29,22 @@ class CashRegister(tk.Tk):
         #frame2 = PageOne(container, self)
         #frame1.grid(row=0, column=0, sticky="nw")
         #frame2.grid(row=0, column=1, sticky="ne")
+
+        #More frames go here
+        scanFrame = ScanFrame(container, self)
+        scanFrame.grid(row=0, column=0, sticky="NW")
         
         purchaseInfoFrame = PurchaseInfoFrame(container, self)
-        purchaseInfoFrame.grid(row=0, column=1, sticky="NE")
+        purchaseInfoFrame.grid(row=0, column=1, rowspan=4, sticky="NE")
+
+        #buttonFrame = ButtonFrame(container, self)
+        #buttonFrame.grid(row=1, column=0, sticky="NW")
+        
+        
 
         checkoutFrame = CheckoutFrame(container, self)
-        checkoutFrame.grid(row=1, column=1, sticky="N")
-        #More frames go here
+        checkoutFrame.grid(row=5, column=1, sticky="N")
+        
         
 
 
@@ -43,6 +52,44 @@ class CashRegister(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+
+class ScanFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        container = tk.Frame(self)
+
+        #Label
+        self.scanLabel = Label(self, text="UPC/PLU:", font=NORMAL_FONT)
+        self.scanLabel.grid(row=0, column=0)
+
+        #Entry
+        self.scanEntry = Entry(self, font=NORMAL_FONT, width=100)
+        self.scanEntry.grid(row=0, column=1)
+
+        #Button
+        self.scanButton = Button(self, text="Scan", font=NORMAL_FONT, bg="grey")#***Needs command***
+        self.scanButton.grid(row=0, column=2, padx=5)
+
+'''class ButtonFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        container = tk.Frame(self)
+
+        self.itemLookupButton = Button(self, text="Item Lookup", font=NORMAL_FONT)
+        self.itemLookupButton.grid(row=0, column=0)
+
+        self.custLookupButton = Button(self, text="Customer Lookup", font=NORMAL_FONT)
+        self.custLookupButton.grid(row=0, column=1)'''
+
+class NumpadFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        container = tk.Frame(self)
+
+        #Buttons
+        self.one = Button(self, text="1")
+
+        
 
 class PurchaseInfoFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -56,7 +103,7 @@ class PurchaseInfoFrame(tk.Frame):
         #Scrollbar and Listbox
         self.lb = Listbox(self, height = 30, font=NORMAL_FONT, selectmode=SINGLE)
         self.lb.insert(0, "abc")#(index, "")
-        self.lb.insert(0, "xyz")
+        self.lb.insert(1, "xyz")
    
 
         self.yscroll = Scrollbar(self, orient=VERTICAL)
@@ -115,7 +162,9 @@ class CheckoutFrame(tk.Frame):
         #Open small window which just has a button that says swipe card
         pass
 
+    
 
+########################################
 class LoginWindow(Tk):
     
     def checkLogin(self):
