@@ -237,11 +237,11 @@ class CheckoutFrame(tk.Frame):
 
     def payCash(self):
         #Open a small window which just inputs the amnt of cash recieved
-        cashWindow = CashPayment(Tk(), self.getTotal())
+        cashWindow = CashPaymentWindow(Tk(), self.getTotal())
         self.completeOrder()
     def payCard(self):
         #Open small window which just has a button that says swipe card
-        cardWindow = CardPayment(Tk())
+        cardWindow = CardPaymentWindow(Tk())
         self.completeOrder()
        
     def completeOrder(self):
@@ -293,7 +293,7 @@ class LoginWindow(Tk):
         master.mainloop()
 
 
-class CashPayment(Tk):
+class CashPaymentWindow(Tk):
     
     def __init__(self, master, totalAmount):#Constructor
         self.master = master
@@ -331,7 +331,7 @@ class CashPayment(Tk):
 
         master.mainloop()
 
-class CardPayment(Tk):
+class CardPaymentWindow(Tk):
     
     def __init__(self, master):#Constructor
         self.master = master
