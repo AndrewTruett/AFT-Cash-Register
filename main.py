@@ -167,16 +167,19 @@ class PurchaseInfoFrame(tk.Frame):
         self.yscroll.grid(row=1, column=0, rowspan=2, columnspan=2, sticky="NE")
 
         #Edit and Remove Buttons
-        self.editButton = Button(self, text="Edit", font=NORMAL_FONT, bg="grey")#***Needs command***
+        self.voidButton = Button(self, text="Clear Sale", font=NORMAL_FONT, bg="grey", command=lambda: self.clearSale())#***Needs command***
+        self.voidButton.grid(row=3, column=0, pady=10)
+        
         self.removeButton = Button(self, text="Remove", font=NORMAL_FONT, bg="grey", command=lambda: self.removeItem())
-
-        self.editButton.grid(row=3, column=0, pady=10)
         self.removeButton.grid(row=3, column=1, pady=10)
 
     def removeItem(self):
         #get price of item, reduce the total cost
         #Reducing cost may involve generating an event that the frame that displays the current total would listen for.
         self.lb.delete(ANCHOR)
+
+    def clearSale(self):
+        self.lb.delete(0, END)
         
         
         
