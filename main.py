@@ -190,26 +190,28 @@ class CheckoutFrame(tk.Frame):
         self.totalLabel = Label(self, text="Total:", font=NORMAL_FONT)
         self.totalLabel.grid(row=0, column=0)
 
-        #Total Amt Label
-        self.totalAmtLabel = Label(self, text="0", font=NORMAL_FONT)
-        self.totalAmtLabel.grid(row=0, column=1)
+        #Total Amt Entry
+        self.totalAmtEntry = Entry(self, font=NORMAL_FONT, width=10)
+        self.totalAmtEntry.configure(state="readonly")
+        self.totalAmtEntry.grid(row=0, column=1)
         
         #Checkout Label
         self.checkoutLabel = Label(self, text="Checkout", font=NORMAL_FONT)
         self.checkoutLabel.grid(row=1, column=0, columnspan=2)
 
         #Checkout Buttons
-        self.cashButton = Button(self, text="Cash", font=NORMAL_FONT, bg="grey")#***Needs command***
+        self.cashButton = Button(self, text="Cash", font=NORMAL_FONT, bg="grey", command=lambda: self.payCash())#***Needs command***
         self.cardButton = Button(self, text="Card", font=NORMAL_FONT, bg="grey")#***Needs command***
 
         self.cashButton.grid(row=2, column=0, pady=10)
         self.cardButton.grid(row=2, column=1)
 
     def getTotal(self):
-        print(self.totalAmtLabel.cget("text"))
+        print(self.totalAmtEntry.cget("text"))
 
     def payCash(self):
         #Open a small window which just inputs the amnt of cash recieved
+        cashWindow = CashPayment(Tk(), self.getTotal())
         pass
     def payCard(self):
         #Open small window which just has a button that says swipe card
@@ -263,5 +265,46 @@ class LoginWindow(Tk):
         createAccountB.grid(row=4, column=1)
         
         master.mainloop()
+
+
+class CashPayment(Tk):
+    
+    def __init__(self, master, totalAmount):#Constructor
+        self.master = master
+        master.title('Cash Payment')
+
+        self.totalAmount = totalAmount
+
+        #Label
+        self.totalLabel = Label(master, text="Total:", font=NORMAL_FONT)
+        self.totalLabel.grid(row=0, column=0)
+
+        self.paymentLabel = Label(master, text="Amount Payed:", font=NORMAL_FONT)
+        self.paymentLabel.grid(row=1, column=0)
+
+        self.changeLabel = Label(master, text="Change:", font=NORMAL_FONT)
+        self.changeLabel.grid(row=2, column=0)
+
+        #Entries
+        self.totalEntry = Entry(master, font=NORMAL_FONT)
+        self.totalEntry.configure(state="readonly")
+        self.totalEntry.insert(0, str(self.totalAmount))
+        self.totalEntry.grid(row=0, column=1)
+
+        self.paymentEntry = Entry(master, font=NORMAL_FONT)
+        self.paymentEntry.grid(row=1, column=1, pady=5)
+
+        self.changeEntry = Entry(master, font=NORMAL_FONT)
+        self.changeEntry.configure(state="readonly")
+        #changeEntry.insert(0, the amount of change)
+        self.changeEntry.grid(row=2, column=1)
+
+        #Button
+        self.makeChangeButton = Button(master, text="Make Change")#***Needs command***
+        self.makeChangeButton.grid(row=3, column=0, rowspan=2, pady=5)
+        
+
+        master.mainloop()
+        
         
 LoginWindow(Tk())
