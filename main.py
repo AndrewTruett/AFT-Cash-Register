@@ -76,8 +76,12 @@ class ScanFrame(tk.Frame):
         self.scanEntry.grid(row=0, column=1)
 
         #Button
-        self.scanButton = Button(self, text="Scan", font=NORMAL_FONT, bg="grey")#***Needs command***
+        self.scanButton = Button(self, text="Scan", font=NORMAL_FONT, bg="grey", command=lambda:self.scanItem(self.scanEntry.get()))#***Needs command***
         self.scanButton.grid(row=0, column=2, padx=5)
+
+    def scanItem(self, upc):
+        if upc is "":#***This condition will be changed to if upc != upc in database
+            incorrectWindow = IncorrectUPCWindow(Tk())
 
 '''class ButtonFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -333,9 +337,9 @@ class CashPaymentWindow(Tk):
 
 class CardPaymentWindow(Tk):
     
-    def __init__(self, master):#Constructor
+    def __init__(self, master):
         self.master = master
-        master.title('Card Payment')
+        master.title("Card Payment")
 
         self.numDigits = 0
 
@@ -369,7 +373,20 @@ class CardPaymentWindow(Tk):
             self.cardNumEntry.insert(END, random.randint(0,9))
             self.numDigits += 1
             self.master.after(10, self.addDigit)
-        
+
+class IncorrectUPCWindow(Tk):
+    
+    def __init__(self, master):
+        self.master = master
+        master.title("UPC Not Found")
+
+        #Label
+        notFoundLabel = Label(master, text="The entered UPC did not match our records")
+        notFoundLabel.grid(row=0, column=0, padx=10)
+
+        #Button
+        closeButton = Button(master, text="Close", command=lambda: self.master.destroy())
+        closeButton.grid(row=1, column=0, pady=5)
         
             
         
