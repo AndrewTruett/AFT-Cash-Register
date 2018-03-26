@@ -381,12 +381,12 @@ class IncorrectUPCWindow(Tk):
         master.title("UPC Not Found")
 
         #Label
-        notFoundLabel = Label(master, text="The entered UPC did not match our records")
-        notFoundLabel.grid(row=0, column=0, padx=10)
+        self.notFoundLabel = Label(master, text="The entered UPC did not match our records")
+        self.notFoundLabel.grid(row=0, column=0, padx=10)
 
         #Button
-        closeButton = Button(master, text="Close", command=lambda: self.master.destroy())
-        closeButton.grid(row=1, column=0, pady=5)
+        self.closeButton = Button(master, text="Close", command=lambda: self.master.destroy())
+        self.closeButton.grid(row=1, column=0, pady=5)
         
             
         
