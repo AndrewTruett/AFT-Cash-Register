@@ -285,13 +285,13 @@ class CashPayment(Tk):
 
         #Label
         self.totalLabel = Label(master, text="Total:", font=NORMAL_FONT)
-        self.totalLabel.grid(row=0, column=0)
+        self.totalLabel.grid(row=0, column=0, sticky="W")
 
         self.paymentLabel = Label(master, text="Amount Payed:", font=NORMAL_FONT)
-        self.paymentLabel.grid(row=1, column=0)
+        self.paymentLabel.grid(row=1, column=0, sticky="W")
 
         self.changeLabel = Label(master, text="Change:", font=NORMAL_FONT)
-        self.changeLabel.grid(row=2, column=0)
+        self.changeLabel.grid(row=2, column=0, sticky="W")
 
         #Entries
         self.totalEntry = Entry(master, font=NORMAL_FONT)
