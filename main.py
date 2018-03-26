@@ -17,6 +17,7 @@ class CashRegister(tk.Tk):
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
+        self.resizable(False, False)
 
         #test - need to update
         # container.grid_rowconfigure(0, weight=1)
@@ -56,7 +57,6 @@ class CashRegister(tk.Tk):
         
         
 
-
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
@@ -83,16 +83,6 @@ class ScanFrame(tk.Frame):
         if upc is "":#***This condition will be changed to if upc != upc in database
             incorrectWindow = IncorrectUPCWindow(Tk())
 
-'''class ButtonFrame(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        container = tk.Frame(self)
-
-        self.itemLookupButton = Button(self, text="Item Lookup", font=NORMAL_FONT)
-        self.itemLookupButton.grid(row=0, column=0)
-
-        self.custLookupButton = Button(self, text="Customer Lookup", font=NORMAL_FONT)
-        self.custLookupButton.grid(row=0, column=1)'''
 
 class NumpadFrame(tk.Frame):
 
@@ -254,7 +244,9 @@ class CheckoutFrame(tk.Frame):
 
     
 
-########################################
+########################################################################################################################
+
+    
 class LoginWindow(Tk):
     
     def checkLogin(self):
@@ -265,12 +257,12 @@ class LoginWindow(Tk):
         app = CashRegister()#for testing just open the cash register
         app.mainloop()
         
-        pass
 
     
     def __init__(self, master):#Constructor
         self.master = master
         master.title('Login')
+        master.resizable(False, False)
 
         #Labels
         welcome = Label(master, text='Welcome to AFT Cash Register!')
@@ -302,6 +294,7 @@ class CashPaymentWindow(Tk):
     def __init__(self, master, totalAmount):#Constructor
         self.master = master
         master.title('Cash Payment')
+        master.resizable(False, False)
 
         self.totalAmount = totalAmount
 
@@ -340,6 +333,7 @@ class CardPaymentWindow(Tk):
     def __init__(self, master):
         self.master = master
         master.title("Card Payment")
+        master.resizable(False, False)
 
         self.numDigits = 0
 
@@ -379,6 +373,7 @@ class IncorrectUPCWindow(Tk):
     def __init__(self, master):
         self.master = master
         master.title("UPC Not Found")
+        master.resizable(False, False)
 
         #Label
         self.notFoundLabel = Label(master, text="The entered UPC did not match our records")
