@@ -13,7 +13,7 @@ class CashRegister(tk.Tk):
 
         tk.Tk.wm_title(self,"Cash Register")  #title of the software
         
-        self.state("zoomed")
+        #self.state("zoomed")
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
