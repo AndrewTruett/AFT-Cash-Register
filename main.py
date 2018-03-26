@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import *
 
+import random
+import time
+
 LARGE_FONT = ("Verdana",24)
 NORMAL_FONT = ("Verdana",14)
 
@@ -179,6 +182,7 @@ class PurchaseInfoFrame(tk.Frame):
         self.lb.delete(ANCHOR)
 
     def clearSale(self):
+        #set total field to 0
         self.lb.delete(0, END)
         
         
@@ -204,8 +208,8 @@ class CheckoutFrame(tk.Frame):
         self.checkoutLabel.grid(row=1, column=0, columnspan=2)
 
         #Checkout Buttons
-        self.cashButton = Button(self, text="Cash", font=NORMAL_FONT, bg="grey", command=lambda: self.payCash())#***Needs command***
-        self.cardButton = Button(self, text="Card", font=NORMAL_FONT, bg="grey")#***Needs command***
+        self.cashButton = Button(self, text="Cash", font=NORMAL_FONT, bg="grey", command=lambda: self.payCash())
+        self.cardButton = Button(self, text="Card", font=NORMAL_FONT, bg="grey", command=lambda: self.payCard())
 
         self.cashButton.grid(row=2, column=0, pady=10)
         self.cardButton.grid(row=2, column=1)
@@ -216,9 +220,14 @@ class CheckoutFrame(tk.Frame):
     def payCash(self):
         #Open a small window which just inputs the amnt of cash recieved
         cashWindow = CashPayment(Tk(), self.getTotal())
-        pass
+        self.completeOrder()
     def payCard(self):
         #Open small window which just has a button that says swipe card
+        cardWindow = CardPayment(Tk())
+        self.completeOrder()
+       
+    def completeOrder(self):
+        #clear the items, set total to 0 since order is complete
         pass
 
     
@@ -301,9 +310,51 @@ class CashPayment(Tk):
         #Button
         self.makeChangeButton = Button(master, text="Make Change")#***Needs command***
         self.makeChangeButton.grid(row=3, column=0, rowspan=2, pady=5)
-        
 
         master.mainloop()
+
+class CardPayment(Tk):
+    
+    def __init__(self, master):#Constructor
+        self.master = master
+        master.title('Card Payment')
+
+        self.numDigits = 0
+
+        #Labels
+        self.swipeCardLabel = Label(master, text="Swipe Card", font=NORMAL_FONT)
+        self.swipeCardLabel.grid(row=0, column=0, columnspan=3)
+        
+        self.cardNumLabel = Label(master, text="Card Number:", font=NORMAL_FONT)
+        self.cardNumLabel.grid(row=1, column=0, padx=5, pady=5)
+
+        #Entry
+        self.cardNumEntry = Entry(master, font=NORMAL_FONT)
+        self.cardNumEntry.grid(row=1, column=1)
+
+        #Button
+        self.swipeButton = Button(master, text="Swipe", font=NORMAL_FONT, command=lambda: self.cardSwipe())
+        self.swipeButton.grid(row=1, column=2, padx=5)
+
+        self.completeButton = Button(master, text="Complete", font=NORMAL_FONT, command=lambda: self.master.destroy())
+        self.completeButton.grid(row=2, column=0, columnspan=3, pady=5)
+
+    def cardSwipe(self):
+        self.cardNumEntry.delete(0, END)
+        self.numDigits = 0
+        self.addDigit()
+
+    def addDigit(self):
+        if self.numDigits > 16:
+            return
+        else:
+            self.cardNumEntry.insert(END, random.randint(0,9))
+            self.numDigits += 1
+            self.master.after(10, self.addDigit)
+        
+        
+            
+        
         
         
 LoginWindow(Tk())
