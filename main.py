@@ -115,7 +115,7 @@ class NumpadFrame(tk.Frame):
         self.numpad_entry.grid(row=0, columnspan=2)
 
         #Buttons
-        #1st row
+        #2nd row
         self.seven = Button(self,text="7",font=NORMAL_FONT, bg="white",height=3,width=5, command=lambda: self.button_press('7'))\
             .grid(row=2,column=0,padx=3,pady=3)
         self.eight = Button(self,text="8",font=NORMAL_FONT, bg="white",height=3,width=5, command=lambda: self.button_press('8'))\
@@ -123,7 +123,7 @@ class NumpadFrame(tk.Frame):
         self.nine = Button(self,text="9",font=NORMAL_FONT, bg="white",height=3,width=5, command=lambda: self.button_press('9')).\
             grid(row=2,column=2,padx=3,pady=3)
 
-        # 2nd row
+        # 3rd row
         self.four = Button(self, text="4", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('4')).\
             grid(row=3, column=0,padx=3,pady=3)
         self.five = Button(self, text="5", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('5')).\
@@ -131,7 +131,7 @@ class NumpadFrame(tk.Frame):
         self.six = Button(self, text="6", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('6')).\
             grid(row=3, column=2,padx=3,pady=3)
 
-        # 3rd row
+        # 4th row
         self.one = Button(self, text="1", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('1')).\
             grid(row=4, column=0,padx=3,pady=3)
         self.two = Button(self, text="2", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('2')).\
@@ -139,7 +139,7 @@ class NumpadFrame(tk.Frame):
         self.three = Button(self, text="3", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('3')).\
             grid(row=4, column=2,padx=3,pady=3)
 
-        #4th row
+        # 5th row
         self.zero = Button(self, text="0", font=NORMAL_FONT, bg="white", height=3, width=5,
                           command=lambda: self.button_press('0')). \
             grid(row=5, column=0, padx=3, pady=3)
@@ -150,13 +150,10 @@ class NumpadFrame(tk.Frame):
                                command=lambda: self.button_press('.')). \
             grid(row=5, column=2, padx=3, pady=3)
 
-        #5th row           #command needs update @frn-self
+        # 6th row           #command needs update @frn-self
         self.zero = Button(self, text="CLEAR", font=NORMAL_FONT, bg="white", height=3, width=10,
                            command=lambda: self.button_press('CLR')). \
             grid(row=6, columnspan=3, padx=3, pady=3)
-
-
-
 
 
 class PurchaseInfoFrame(tk.Frame):
