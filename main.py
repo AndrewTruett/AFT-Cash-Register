@@ -92,7 +92,7 @@ class ScanFrame(tk.Frame):
 
 class NumpadFrame(tk.Frame):
 
-    def button_press(self,value):
+    def button_press(self,value):  #needs update for "CLR" @frn-self
         # Get the current value in the entry
         entry = self.numpad_entry.get()
         # Put the new value to the right of it
@@ -143,6 +143,23 @@ class NumpadFrame(tk.Frame):
             grid(row=4, column=1,padx=3,pady=3)
         self.three = Button(self, text="3", font=NORMAL_FONT, bg="white", height=3, width=5, command=lambda: self.button_press('3')).\
             grid(row=4, column=2,padx=3,pady=3)
+
+        #4th row
+        self.zero = Button(self, text="0", font=NORMAL_FONT, bg="white", height=3, width=5,
+                          command=lambda: self.button_press('0')). \
+            grid(row=5, column=0, padx=3, pady=3)
+        self.zeroZero = Button(self, text="00", font=NORMAL_FONT, bg="white", height=3, width=5,
+                           command=lambda: self.button_press('00')). \
+            grid(row=5, column=1, padx=3, pady=3)
+        self.decimal = Button(self, text=".", font=NORMAL_FONT, bg="white", height=3, width=5,
+                               command=lambda: self.button_press('.')). \
+            grid(row=5, column=2, padx=3, pady=3)
+
+        #5th row           #command needs update @frn-self
+        self.zero = Button(self, text="CLEAR", font=NORMAL_FONT, bg="white", height=3, width=10,
+                           command=lambda: self.button_press('CLR')). \
+            grid(row=6, columnspan=3, padx=3, pady=3)
+
 
 
 
