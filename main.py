@@ -101,10 +101,11 @@ class NumpadFrame(tk.Frame):
         entry = entry+value
 
         # Clear the entry box
-        self.numpad_entry.delete(0, "end")
+        self.numpad_entry.delete(0, END)
 
         # Insert the new value going from left to right
-        self.numpad_entry.insert(0, entry)
+        if value is not "CLR":
+            self.numpad_entry.insert(0, entry)
 
 
     def __init__(self, parent, controller):
