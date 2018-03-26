@@ -194,6 +194,7 @@ class CheckoutFrame(tk.Frame):
         self.totalAmtEntry = Entry(self, font=NORMAL_FONT, width=10)
         self.totalAmtEntry.configure(state="readonly")
         self.totalAmtEntry.grid(row=0, column=1)
+        self.totalAmtEntry.insert(0, "0")
         
         #Checkout Label
         self.checkoutLabel = Label(self, text="Checkout", font=NORMAL_FONT)
@@ -231,10 +232,7 @@ class LoginWindow(Tk):
         app.mainloop()
         
         pass
-    
-    def signup(self):
-        #open a new screen that allows user to create account
-        pass
+
     
     def __init__(self, master):#Constructor
         self.master = master
@@ -260,9 +258,7 @@ class LoginWindow(Tk):
 
         #Buttons
         loginB = Button(master, text='Log in', command=self.checkLogin)
-        createAccountB = Button(master, text="Create an Account!")
-        loginB.grid(row=4, column=0)
-        createAccountB.grid(row=4, column=1)
+        loginB.grid(row=4, column=0, columnspan=2, pady=5)
         
         master.mainloop()
 
