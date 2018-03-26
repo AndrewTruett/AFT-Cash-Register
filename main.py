@@ -192,9 +192,9 @@ class CheckoutFrame(tk.Frame):
 
         #Total Amt Entry
         self.totalAmtEntry = Entry(self, font=NORMAL_FONT, width=10)
-        self.totalAmtEntry.configure(state="readonly")
+        self.totalAmtEntry.insert(END, "0")
+        self.totalAmtEntry.configure(state="readonly")#this may possibly be a problem. not sure if we can programmatically change the text in this field if its read only
         self.totalAmtEntry.grid(row=0, column=1)
-        self.totalAmtEntry.insert(0, "0")
         
         #Checkout Label
         self.checkoutLabel = Label(self, text="Checkout", font=NORMAL_FONT)
@@ -208,7 +208,7 @@ class CheckoutFrame(tk.Frame):
         self.cardButton.grid(row=2, column=1)
 
     def getTotal(self):
-        print(self.totalAmtEntry.cget("text"))
+        return self.totalAmtEntry.get()
 
     def payCash(self):
         #Open a small window which just inputs the amnt of cash recieved
@@ -283,15 +283,15 @@ class CashPayment(Tk):
 
         #Entries
         self.totalEntry = Entry(master, font=NORMAL_FONT)
-        self.totalEntry.configure(state="readonly")
         self.totalEntry.insert(0, str(self.totalAmount))
+        self.totalEntry.configure(state="readonly")#this may possibly be a problem. not sure if we can programmatically change the text in this field if its read only
         self.totalEntry.grid(row=0, column=1)
 
         self.paymentEntry = Entry(master, font=NORMAL_FONT)
         self.paymentEntry.grid(row=1, column=1, pady=5)
 
         self.changeEntry = Entry(master, font=NORMAL_FONT)
-        self.changeEntry.configure(state="readonly")
+        self.changeEntry.configure(state="readonly")#this may possibly be a problem. not sure if we can programmatically change the text in this field if its read only
         #changeEntry.insert(0, the amount of change)
         self.changeEntry.grid(row=2, column=1)
 
