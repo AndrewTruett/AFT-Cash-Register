@@ -1,10 +1,11 @@
-#!/usr/bin/env python
-import sys
-import random
-import datetime
+#Must run these 2 commands before executing python code
+#ssh -L 9999:localhost:9999 username@134.74.126.104 -> this will prompt for a password, give it a moment to log you in
+#then run ssh -L 9999:localhost:3306 username@134.74.146.21 -> this will prompt for a password again
+#once you have run the last command, leave the window open, and run the python code.
 
-# Run `pip install mysql-connector` or follow the instructions at
-#`https://dev.mysql.com/doc/connector-python/en/connector-python-installation.html`
+#username is in this style: XXXX#### where XXXX = first 4 letters of last name, and #### = last 4 numbers of EMPLID
+#password is your EMPLID
+
 import mysql.connector
 from mysql.connector import errorcode
 
@@ -24,8 +25,8 @@ def showCashiers(cursor):
 '''
 
 config = {
-    "user": '**********',
-    "password": '********',
+    "user": 'JCSP18TR0600',
+    "password": '23550600',
     "host": '127.0.0.1',
     "port": '9999',
     "database": 'JCS18336AFT'
