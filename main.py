@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import *
-
 import random
 import time
 
@@ -20,36 +19,11 @@ class CashRegister(tk.Tk):
         container.pack(side="top", fill="both", expand=True)
         self.resizable(False, False)
 
-        # test - need to update
-        # container.grid_rowconfigure(0, weight=1)
-        # container.grid_columnconfigure(0, weight=1)
-
-        '''self.frames = {}
-        for F in (StartPage,PageOne,PageTwo):
-            frame = F(container, self)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(StartPage)'''
-
-        # frame1 = StartPage(container, self)
-        # frame2 = PageOne(container, self)
-        # frame1.grid(row=0, column=0, sticky="nw")
-        # frame2.grid(row=0, column=1, sticky="ne")
-
-        # More frames go here
-        # scanFrame = ScanFrame(container, self)
-        # scanFrame.grid(row=0, column=0, sticky="NW")
-
-        ##Numpad Frame
-        numpadFrame = NumpadFrame(container, self)
-        numpadFrame.grid(row=0, column=0, rowspan=10, sticky="NW")
+        scanFrame = ScanFrame(container, self)
+        scanFrame.grid(row=0, column=0, rowspan=10, sticky="NW")
 
         purchaseInfoFrame = PurchaseInfoFrame(container, self)
         purchaseInfoFrame.grid(row=0, column=3, rowspan=4, sticky="NE")
-
-        # buttonFrame = ButtonFrame(container, self)
-        # buttonFrame.grid(row=1, column=0, sticky="NW")
 
         checkoutFrame = CheckoutFrame(container, self)
         checkoutFrame.grid(row=5, column=3, sticky="N")
@@ -59,30 +33,7 @@ class CashRegister(tk.Tk):
         frame.tkraise()
 
 
-# class ScanFrame(tk.Frame):
-#     def __init__(self, parent, controller):
-#         tk.Frame.__init__(self, parent)
-#         container = tk.Frame(self)
-#
-#         # Label
-#         self.scanLabel = Label(self, text="UPC/PLU:", font=NORMAL_FONT)
-#         self.scanLabel.grid(row=0, column=0)
-#
-#         # Entry
-#         self.scanEntry = Entry(self, font=NORMAL_FONT, width=100)
-#         self.scanEntry.grid(row=0, column=1)
-#
-#         # Button
-#         self.scanButton = Button(self, text="Scan", font=NORMAL_FONT, bg="grey",
-#                                  command=lambda: self.scanItem(self.scanEntry.get()))  # ***Needs command***
-#         self.scanButton.grid(row=0, column=2, padx=5)
-#
-#     def scanItem(self, upc):
-#         if upc is "":  # ***This condition will be changed to if upc != upc in database
-#             incorrectWindow = IncorrectUPCWindow(Tk())
-
-
-class NumpadFrame(tk.Frame):
+class ScanFrame(tk.Frame):
 
     def button_press(self, value):  # needs update for "CLR" @frn-self
         # Get the current value in the entry
@@ -105,9 +56,6 @@ class NumpadFrame(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        container = tk.Frame(self)
-
-
 
         #1st row
         self.scanLabel = Label(self, text="UPC/PLU:", font=NORMAL_FONT)
@@ -174,9 +122,6 @@ class NumpadFrame(tk.Frame):
         self.clear = Button(self, text="CLEAR", font=NORMAL_FONT, bg="white", height=3, width=10,
                            command=lambda: self.button_press('CLR')). \
             grid(row=7, column=7)
-
-
-
 
 
 
