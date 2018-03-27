@@ -302,6 +302,7 @@ class CashPaymentWindow(Tk):
         self.closeButton = Button(master, text="Close", command=lambda:self.master.destroy())#***Needs command***
         self.closeButton.grid(row=3, column=1, pady=5)
 
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
         master.mainloop()
 
 
@@ -311,6 +312,8 @@ class CardPaymentWindow(Tk):
         self.master = master
         master.title("Card Payment")
         master.resizable(False, False)
+
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
 
         self.numDigits = 0
 
@@ -352,9 +355,10 @@ class IncorrectUPCWindow(Tk):
         self.master = master
         master.title("UPC Not Found")
         master.resizable(False, False)
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
 
         # Label
-        self.notFoundLabel = Label(master, text="The entered UPC did not match our records")
+        self.notFoundLabel = Label(master, text="The entered UPC did not match our records", font = NORMAL_FONT)
         self.notFoundLabel.grid(row=0, column=0, padx=10)
 
         # Button
