@@ -128,9 +128,11 @@ class ScanFrame(tk.Frame):
     def scanItem(self, upc):
         if upc is "":  # ***This condition will be changed to if upc != upc in database
             incorrectWindow = IncorrectUPCWindow(Tk())
+        if upc[0:3] == "999":
+            managerApprovalWindow = AgeRestrictedItemApprovalWin(Tk())
 
     def customerLookup(self):
-        customerLookupWindow = AgeRestrictedItemApprovalWin(Tk())
+        customerLookupWindow = CustomerLookupWindow(Tk())
 
 
 
