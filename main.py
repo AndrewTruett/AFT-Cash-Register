@@ -248,6 +248,8 @@ class LoginWindow(Tk):
         loginB = Button(master, text='Log in', command=self.checkLogin)
         loginB.grid(row=4, column=0, columnspan=2, pady=5)
 
+        #centers the window
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))
         master.mainloop()
 
 
