@@ -121,7 +121,13 @@ class ScanFrame(tk.Frame):
         #6th row
         self.clear = Button(self, text="CLEAR", font=NORMAL_FONT, bg="white", height=3, width=10,
                            command=lambda: self.button_press('CLR')). \
-            grid(row=7, column=7)
+            grid(row=7, column=7, pady=20)
+
+        #7th row
+        self.customerLookup = Button(self, text="Customer Lookup", font=NORMAL_FONT, bg="darkgreen", height=3, width=15,).\
+            grid(row=9, column=7,pady=20) #needs command
+        # self.discount = Button(self, text="Discount", font=NORMAL_FONT, bg="darkgreen", height=3, width=15, ). \
+        #     grid(row=9, column=7, pady=20) #needs command
 
 
 
@@ -230,8 +236,8 @@ class LoginWindow(Tk):
         welcome = Label(master, text='Welcome to AFT Cash Register!')
         welcome.grid(columnspan=2, row=0, column=0)
 
-        intruction = Label(master, text='Please login')
-        intruction.grid(row=1, column=0, sticky=W)
+        # intruction = Label(master, text='Please login')
+        # intruction.grid(row=1, column=0, sticky=W)
 
         nameL = Label(master, text='Username: ')
         pwordL = Label(master, text='Pin number: ')
