@@ -130,7 +130,9 @@ class ScanFrame(tk.Frame):
             incorrectWindow = IncorrectUPCWindow(Tk())
 
     def customerLookup(self):
-        customerLookupWindow = CustomerLookupWindow(Tk())
+        customerLookupWindow = AgeRestrictedItemApprovalWin(Tk())
+
+
 
 class PurchaseInfoFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -389,5 +391,41 @@ class CustomerLookupWindow(Tk):
 
         master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
         master.mainloop()
+
+
+#need to add : an UPC parameter. So when id is verified item can be added to the item list
+class AgeRestrictedItemApprovalWin(Tk):
+    def __init__(self, master):
+        self.master = master
+        master.title('Manager Approval')
+        master.resizable(False, False)
+
+        # Label
+        self.managerPINLabel = Label(master, text="Manager PIN # : ", font=NORMAL_FONT)
+        self.managerPINLabel.grid(row=0, column=0, sticky="W")
+
+        self.customerAgeLabel = Label(master, text="Customer Age # : ", font=NORMAL_FONT)
+        self.customerAgeLabel.grid(row=1, column=0, sticky="W")
+
+        # Entries
+        self.managerPINEntry = Entry(master, font=NORMAL_FONT,show='*')
+        self.managerPINEntry.grid(row=0, column=1, pady=5)
+
+        self.customerAgeEntry = Entry(master, font=NORMAL_FONT)
+        self.customerAgeEntry.grid(row=1, column=1, pady=5)
+
+        # Button
+        self.verifyButton = Button(master, text="Verify", command=lambda: self.checkAge(self.customerAgeEntry.get()))
+        self.verifyButton.grid(row=3, column=1, pady=5)
+
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
+        master.mainloop()
+
+
+    def checkAge(self,age):
+        if int(age)>21:
+            pass        #needs command here which will add the item to the item list
+        self.master.destroy()
+
 
 LoginWindow(Tk())
