@@ -13,9 +13,16 @@ def showCashiers(cursor):
     query = ("SELECT * FROM Cashier;")
     cursor.execute(query)
     result = cursor.fetchall()
+
+    #Print number and name
+    for row in result:
+        print(row[0], row[1])
+
+    #Print entire row
     for row in result:
         print(row)
     return cursor
+
 
 #Does not work
 '''def createManager(cursor):
@@ -25,8 +32,8 @@ def showCashiers(cursor):
 '''
 
 config = {
-    "user": 'JCSP18TR0600',
-    "password": '23550600',
+    "user": '***',
+    "password": '***',
     "host": '127.0.0.1',
     "port": '9999',
     "database": 'JCS18336AFT'
@@ -35,8 +42,9 @@ config = {
 cnx = mysql.connector.connect(**config)
 cursor = cnx.cursor()
 
-newCursor = showCashiers(cursor)
-
+cursor = showCashiers(cursor)
+cursor.close()
+cnx.close()
 
 
 '''
