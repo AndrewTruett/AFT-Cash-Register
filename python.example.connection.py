@@ -8,13 +8,37 @@ import datetime
 import mysql.connector
 from mysql.connector import errorcode
 
+def showCashiers(cursor):
+    query = ("SELECT * FROM Cashier;")
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for row in result:
+        print(row)
+    return cursor
+
+#Does not work
+'''def createManager(cursor):
+    query = ("INSERT INTO Manager (employeeID, Name, Pin) VALUES (1, 'Andrew Truett', 1234);")
+    cursor.execute(query)
+    return cursor
+'''
+
 config = {
-    "user": 'FakeStudent',
-    "password": 'password',
+    "user": '**********',
+    "password": '********',
     "host": '127.0.0.1',
-    "database": 'FakeStudent'
+    "port": '9999',
+    "database": 'JCS18336AFT'
 }
 
+cnx = mysql.connector.connect(**config)
+cursor = cnx.cursor()
+
+newCursor = showCashiers(cursor)
+
+
+
+'''
 def create_random_date():
     return datetime.date(
             random.randint(2000, 2017), # Year
@@ -74,4 +98,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
+'''
