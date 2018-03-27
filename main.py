@@ -35,25 +35,6 @@ class CashRegister(tk.Tk):
 
 class ScanFrame(tk.Frame):
 
-    def button_press(self, value):  # needs update for "CLR" @frn-self
-        # Get the current value in the entry
-        entry = self.numpad_entry.get()
-        # Put the new value to the right of it
-        # If it was 1 and 2 is pressed it is now 12
-        # Otherwise the new number goes on the left
-        entry = entry + value
-
-        # Clear the entry box
-        self.numpad_entry.delete(0, END)
-
-        # Insert the new value going from left to right
-        if value is not "CLR":
-            self.numpad_entry.insert(0, entry)
-
-    def scanItem(self, upc):
-        if upc is "":  # ***This condition will be changed to if upc != upc in database
-            incorrectWindow = IncorrectUPCWindow(Tk())
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -124,12 +105,32 @@ class ScanFrame(tk.Frame):
             grid(row=7, column=7, pady=20)
 
         #7th row
-        self.customerLookup = Button(self, text="Customer Lookup", font=NORMAL_FONT, bg="darkgreen", height=3, width=15,).\
-            grid(row=9, column=7,pady=20) #needs command
-        # self.discount = Button(self, text="Discount", font=NORMAL_FONT, bg="darkgreen", height=3, width=15, ). \
-        #     grid(row=9, column=7, pady=20) #needs command
+        self.cusLookup = Button(self, text="Customer Lookup", font=NORMAL_FONT, bg="darkgreen", height=3, width=15,
+                                     command=lambda: self.customerLookup()).\
+            grid(row=9, column=7,pady=20)
 
 
+    def button_press(self, value):  # needs update for "CLR" @frn-self
+        # Get the current value in the entry
+        entry = self.numpad_entry.get()
+        # Put the new value to the right of it
+        # If it was 1 and 2 is pressed it is now 12
+        # Otherwise the new number goes on the left
+        entry = entry + value
+
+        # Clear the entry box
+        self.numpad_entry.delete(0, END)
+
+        # Insert the new value going from left to right
+        if value is not "CLR":
+            self.numpad_entry.insert(0, entry)
+
+    def scanItem(self, upc):
+        if upc is "":  # ***This condition will be changed to if upc != upc in database
+            incorrectWindow = IncorrectUPCWindow(Tk())
+
+    def customerLookup(self):
+        customerLookupWindow = CustomerLookupWindow(Tk())
 
 class PurchaseInfoFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -254,8 +255,8 @@ class LoginWindow(Tk):
         loginB = Button(master, text='Log in', command=self.checkLogin)
         loginB.grid(row=4, column=0, columnspan=2, pady=5)
 
-        #centers the window
-        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))
+
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id())) #centers the window
         master.mainloop()
 
 
@@ -360,5 +361,29 @@ class IncorrectUPCWindow(Tk):
         self.closeButton = Button(master, text="Close", command=lambda: self.master.destroy())
         self.closeButton.grid(row=1, column=0, pady=5)
 
+class CustomerLookupWindow(Tk):
+
+    def __init__(self, master):
+        self.master = master
+        master.title('Member Lookup')
+        master.resizable(False, False)
+
+        # Label
+        self.memIDLabel = Label(master, text="Member ID : ", font=NORMAL_FONT)
+        self.memIDLabel.grid(row=0, column=0, sticky="W")
+
+        # Entries
+        self.memIDEntry = Entry(master, font=NORMAL_FONT)
+        self.memIDEntry.grid(row=0, column=1, pady=5)
+
+        # Button
+        self.lookupButton = Button(master, text="Lookup!")  # ***Needs command***
+        self.lookupButton.grid(row=3, column=0, pady=5)
+
+        self.closeButton = Button(master, text="Close", command=lambda: self.master.destroy())
+        self.closeButton.grid(row=3, column=1, pady=5)
+
+        master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
+        master.mainloop()
 
 LoginWindow(Tk())
