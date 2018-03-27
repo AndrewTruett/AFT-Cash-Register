@@ -325,7 +325,10 @@ class CashPaymentWindow(Tk):
 
         # Button
         self.makeChangeButton = Button(master, text="Make Change")  # ***Needs command***
-        self.makeChangeButton.grid(row=3, column=0, rowspan=2, pady=5)
+        self.makeChangeButton.grid(row=3, column=0, pady=5)
+
+        self.closeButton = Button(master, text="Close", command=lambda:self.master.destroy())#***Needs command***
+        self.closeButton.grid(row=3, column=1, pady=5)
 
         master.mainloop()
 
