@@ -22,11 +22,13 @@ class CashRegister(tk.Tk):
         scanFrame = ScanFrame(container, self)
         scanFrame.grid(row=0, column=0, rowspan=10, sticky="NW")
 
-        purchaseInfoFrame = PurchaseInfoFrame(container, self)
-        purchaseInfoFrame.grid(row=0, column=3, rowspan=4, sticky="NE")
-
         checkoutFrame = CheckoutFrame(container, self)
         checkoutFrame.grid(row=5, column=3, sticky="N")
+
+        purchaseInfoFrame = PurchaseInfoFrame(container, self, checkoutFrame)
+        purchaseInfoFrame.grid(row=0, column=3, rowspan=4, sticky="NE")
+
+        
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -137,9 +139,10 @@ class ScanFrame(tk.Frame):
 
 
 class PurchaseInfoFrame(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, chkoutFrame):
         tk.Frame.__init__(self, parent)
         container = tk.Frame(self)
+        self.chkoutFrame = chkoutFrame
 
         # Item Labels
         self.itemsLabel = Label(self, text="Items", font=LARGE_FONT)
@@ -147,8 +150,8 @@ class PurchaseInfoFrame(tk.Frame):
 
         # Scrollbar and Listbox
         self.lb = Listbox(self, height=30, font=NORMAL_FONT, selectmode=SINGLE)
-        self.lb.insert(0, "abc")  # (index, "")
-        self.lb.insert(1, "xyz")
+        #self.lb.insert(0, "abc")  # (index, "")
+        #self.lb.insert(1, "xyz")
 
         self.yscroll = Scrollbar(self, orient=VERTICAL)
         self.lb["yscrollcommand"] = self.yscroll.set
@@ -159,7 +162,7 @@ class PurchaseInfoFrame(tk.Frame):
 
         # Edit and Remove Buttons
         self.voidButton = Button(self, text="Clear Sale", font=NORMAL_FONT, bg="grey",
-                                 command=lambda: self.clearSale())  # ***Needs command***
+                                 command=lambda: self.clearSale())  
         self.voidButton.grid(row=3, column=0, pady=10)
 
         self.removeButton = Button(self, text="Remove", font=NORMAL_FONT, bg="grey", command=lambda: self.removeItem())
@@ -173,6 +176,10 @@ class PurchaseInfoFrame(tk.Frame):
     def clearSale(self):
         # set total field to 0
         self.lb.delete(0, END)
+
+    def addItem(self, item, itemPrice):#self, str, int
+        self.insert(END, item)
+        self.chkoutFrame.setTotal(self.chkoutFrame.getTotal+itemPrice)
 
 
 class CheckoutFrame(tk.Frame):
@@ -202,7 +209,11 @@ class CheckoutFrame(tk.Frame):
         self.cardButton.grid(row=2, column=1)
 
     def getTotal(self):
-        return self.totalAmtEntry.get()
+        return int(self.totalAmtEntry.get())
+
+    def setTotal(self, newTotal):
+        self.totalAmtEntry.delete(0, END)
+        self.totalAmtEntry.insert(0, newTotal)
 
     def payCash(self):
         # Open a small window which just inputs the amnt of cash recieved
