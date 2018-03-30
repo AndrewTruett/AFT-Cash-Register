@@ -435,6 +435,7 @@ class AgeRestrictedItemApprovalWin(Tk):
         master.mainloop()
 
 
+class dataFromDatabase():
     def checkAge(self,age):
         if int(age)>21:
             pass        #needs command here which will add the item to the item list
