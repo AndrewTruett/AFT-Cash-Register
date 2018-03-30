@@ -6,14 +6,17 @@ import mysql.connector
 from mysql.connector import errorcode
 
 config = {
-    "user": 'JCS18farhan',
-    "password": 'password',
+    "user": '',
+    "password": '',
     "host": '134.74.146.21',
     "database": 'JCS18336AFT'
 }
 
 LARGE_FONT = ("Verdana", 24)
 NORMAL_FONT = ("Verdana", 14)
+
+# cnx = mysql.connector.connect(**config)
+# cursor = cnx.cursor()
 
 
 class CashRegister(tk.Tk):
@@ -135,23 +138,26 @@ class ScanFrame(tk.Frame):
         if value is not "CLR":
             self.numpad_entry.insert(0, entry)
 
+    u=0 ; n=""; p=0; ra=0;
     def scanItem(self, upc):
-        cnx = mysql.connector.connect(**config)
-        cursor = cnx.cursor()
-
         if upc is "":
             incorrectWindow = IncorrectUPCWindow(Tk())
 
         if upc[0:3] == "999":  # upc is an is an age restricted item
-            managerApprovalWindow = AgeRestrictedItemApprovalWin(Tk())
+            name, price, restrictedAge = Database.ageRestItem(cursor,int(upc))
+
+            if name == "Null" and price == -1:  #upc not found in db
+                incorrectWindow = IncorrectUPCWindow(Tk())
+            else: #upc is correct, now manager approval needed
+                self.n = name; self.u = int(upc); self.p = price; self.ra = restrictedAge   #storing data to global var
+                managerApprovalWindow = AgeRestrictedItemApprovalWin(Tk())
+                u = 0; n = ""; p = 0; ra = 0;   #resetting back to default
         else:
             name, price = Database.item(cursor, int(upc))
             if name == "Null" and price == -1:  #upc not found in db
                 incorrectWindow = IncorrectUPCWindow(Tk())
             else:
                 PurchaseInfoFrame.addItem(name,price)   #add item to the item list
-
-
 
     def customerLookup(self):
         customerLookupWindow = CustomerLookupWindow(Tk())
@@ -425,13 +431,18 @@ class CustomerLookupWindow(Tk):
         master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
         master.mainloop()
 
-
-#need to add : an UPC parameter. So when id is verified item can be added to the item list
 class AgeRestrictedItemApprovalWin(Tk):
     def __init__(self, master):
         self.master = master
         master.title('Manager Approval')
         master.resizable(False, False)
+
+        def addItem(self, age):
+            pin = self.managerPINEntry.get()
+            if Database.checkManagerPin(pin) and int(age) >= ScanFrame.ra.get():
+                name = ScanFrame.n.get();  price = ScanFrame.p.get();
+                PurchaseInfoFrame.addItem(name, price)  # add item to the item list
+                self.master.destroy()
 
         # Label
         self.managerPINLabel = Label(master, text="Manager PIN # : ", font=NORMAL_FONT)
@@ -448,13 +459,10 @@ class AgeRestrictedItemApprovalWin(Tk):
         self.customerAgeEntry.grid(row=1, column=1, pady=5)
 
         # Button
-        self.verifyButton = Button(master, text="Verify", command=lambda: self.checkAge(self.customerAgeEntry.get()))
+        self.verifyButton = Button(master, text="Verify", command=lambda: self.addItem(self,self.customerAgeEntry.get()))
         self.verifyButton.grid(row=3, column=1, pady=5)
 
-        def checkAge(self, age):
-            if int(age) > 21:
-                pass  # needs command here which will add the item to the item list
-                self.master.destroy()
+
 
         master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
         master.mainloop()
@@ -508,16 +516,28 @@ class Database():
                     return name,price;
             return ("Null",-1)
 
-        def AgeRestItem(self,cursor,u):
+        def ageRestItem(self,cursor,u):
             cnx = mysql.connector.connect(**config)
             cursor = cnx.cursor()
             query = "SELECT * FROM AgeRestrictedItem;"
             cursor.execute(query)
 
-            for (upc,name,price) in cursor:
+            for (upc,name,price, reqAge) in cursor:
                 if u==upc:
-                    return name,price;
-            return ("Null",-1)
+                    return name,price,reqAge;
+            return ("Null",-1,0)
+
+        def checkManagerPin(self,pin):
+            cnx = mysql.connector.connect(**config)
+            cursor = cnx.cursor()
+            query = "SELECT * FROM Manager;"
+            cursor.execute(query)
+
+            for p in pin:
+                if p == upc:
+                    return True
+            return False
+
 
 
 
