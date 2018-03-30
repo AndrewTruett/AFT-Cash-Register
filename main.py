@@ -37,7 +37,6 @@ class CashRegister(tk.Tk):
         purchaseInfoFrame = PurchaseInfoFrame(container, self, checkoutFrame)
         purchaseInfoFrame.grid(row=0, column=3, rowspan=4, sticky="NE")
 
-        
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -137,10 +136,22 @@ class ScanFrame(tk.Frame):
             self.numpad_entry.insert(0, entry)
 
     def scanItem(self, upc):
-        if upc is "":  # ***This condition will be changed to if upc != upc in database
+        cnx = mysql.connector.connect(**config)
+        cursor = cnx.cursor()
+
+        if upc is "":
             incorrectWindow = IncorrectUPCWindow(Tk())
-        if upc[0:3] == "999":
+
+        if upc[0:3] == "999":  # upc is an is an age restricted item
             managerApprovalWindow = AgeRestrictedItemApprovalWin(Tk())
+        else:
+            name, price = Database.item(cursor, int(upc))
+            if name == "Null" and price == -1:  #upc not found in db
+                incorrectWindow = IncorrectUPCWindow(Tk())
+            else:
+                PurchaseInfoFrame.addItem(name,price)   #add item to the item list
+
+
 
     def customerLookup(self):
         customerLookupWindow = CustomerLookupWindow(Tk())
@@ -485,5 +496,29 @@ class Database():
                 db_rows = self.showAgeRestrictedItem(query)
                 for row in db_rows:
                     self.tree.insert('', 0, text=row[1], values=(row[2], row[3], row[4],row[5]))
+
+        def item(self,cursor,u):
+            cnx = mysql.connector.connect(**config)
+            cursor = cnx.cursor()
+            query = "SELECT * FROM General Item;"
+            cursor.execute(query)
+
+            for (upc,name,price) in cursor:
+                if u==upc:
+                    return name,price;
+            return ("Null",-1)
+
+        def AgeRestItem(self,cursor,u):
+            cnx = mysql.connector.connect(**config)
+            cursor = cnx.cursor()
+            query = "SELECT * FROM AgeRestrictedItem;"
+            cursor.execute(query)
+
+            for (upc,name,price) in cursor:
+                if u==upc:
+                    return name,price;
+            return ("Null",-1)
+
+
 
 LoginWindow(Tk())
