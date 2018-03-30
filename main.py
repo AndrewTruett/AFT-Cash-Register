@@ -2,6 +2,15 @@ import tkinter as tk
 from tkinter import *
 import random
 import time
+import mysql.connector
+from mysql.connector import errorcode
+
+config = {
+    "user": 'JCS18farhan',
+    "password": 'password',
+    "host": '134.74.146.21',
+    "database": 'JCS18336AFT'
+}
 
 LARGE_FONT = ("Verdana", 24)
 NORMAL_FONT = ("Verdana", 14)
@@ -431,21 +440,17 @@ class AgeRestrictedItemApprovalWin(Tk):
         self.verifyButton = Button(master, text="Verify", command=lambda: self.checkAge(self.customerAgeEntry.get()))
         self.verifyButton.grid(row=3, column=1, pady=5)
 
+        def checkAge(self, age):
+            if int(age) > 21:
+                pass  # needs command here which will add the item to the item list
+                self.master.destroy()
+
         master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))  # centers the window
         master.mainloop()
 
 
-class dataFromDatabase():
-    def checkAge(self,age):
-        if int(age)>21:
-            pass        #needs command here which will add the item to the item list
-        self.master.destroy()
+class Database():
         # SHOW AND RETRIVE ITEM FROM database. USE the Show Func from  data Connection
-        self.viewitems()
-        self.viewMember()
-        self.viewCategories()
-        self.viewAgeResItem()
-
         def viewItems(self):
             items= self.tree.get_children()
             for element in items:
@@ -480,7 +485,5 @@ class dataFromDatabase():
                 db_rows = self.showAgeRestrictedItem(query)
                 for row in db_rows:
                     self.tree.insert('', 0, text=row[1], values=(row[2], row[3], row[4],row[5]))
-            
-
 
 LoginWindow(Tk())
