@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2018 at 06:54 PM
+-- Generation Time: Mar 30, 2018 at 03:50 AM
 -- Server version: 10.2.7-MariaDB
 -- PHP Version: 5.5.38
 
@@ -41,24 +41,24 @@ CREATE TABLE `AgeRestrictedItem` (
 --
 
 INSERT INTO `AgeRestrictedItem` (`Name`, `MemberId`, `Price`, `Required Age`, `UPC`) VALUES
-('Benson & Hedges', 15, '26.99', 21, 123097),
-('Cider', 1, '16.99', 21, 123675),
-('Cognac & Brandy', 11, '21.88', 21, 123980),
+('Benson & Hedges', 15, '26.99', 21, 999097),
+('Cider', 1, '16.99', 21, 999675),
+('Cognac & Brandy', 11, '21.88', 21, 999980),
 ('Coors Light 6 pack', 3, '4.00', 21, 999258),
-('Dunhill', 5, '17.77', 19, 123076),
-('Gin & Rum', 25, '34.55', 21, 123789),
-('L & M Cigarette', 34, '12.99', 19, 123976),
+('Dunhill', 5, '17.77', 19, 999076),
+('Gin & Rum', 25, '34.55', 21, 999789),
+('L & M Cigarette', 34, '12.99', 19, 999976),
 ('Marlboro Light', 1, '14.99', 18, 999123),
-('Newport', 23, '18.77', 19, 123087),
-('Pall Mall Cigarette Packs', 21, '13.88', 19, 123865),
-('Rose Wine', 27, '34.99', 21, 123567),
-('Sparkling Wine', 15, '45.88', 21, 123408),
-('Tequila', 6, '24.88', 21, 123465),
-('Vermouth', 31, '34.88', 21, 123987),
-('Vodka', 7, '33.88', 21, 123454),
-('Whiskey', 13, '28.77', 21, 123786),
-('White Wine', 4, '76.88', 21, 123409),
-('Winston Cigarette', 16, '14.66', 19, 123986);
+('Newport', 23, '18.77', 19, 999087),
+('Pall Mall Cigarette Packs', 21, '13.88', 19, 999865),
+('Rose Wine', 27, '34.99', 21, 999567),
+('Sparkling Wine', 15, '45.88', 21, 999408),
+('Tequila', 6, '24.88', 21, 999465),
+('Vermouth', 31, '34.88', 21, 999987),
+('Vodka', 7, '33.88', 21, 999454),
+('Whiskey', 13, '28.77', 21, 999786),
+('White Wine', 4, '76.88', 21, 999409),
+('Winston Cigarette', 16, '14.66', 19, 999986);
 
 -- --------------------------------------------------------
 
