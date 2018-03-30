@@ -439,6 +439,47 @@ class AgeRestrictedItemApprovalWin(Tk):
         if int(age)>21:
             pass        #needs command here which will add the item to the item list
         self.master.destroy()
+        # SHOW AND RETRIVE ITEM FROM database. USE the Show Func from  data Connection
+        self.viewitems()
+        self.viewMember()
+        self.viewCategories()
+        self.viewAgeResItem()
+
+        def viewItems(self):
+            items= self.tree.get_children()
+            for element in items:
+                self.tree.delete(element)
+                query= "SELECT * FROM General Item ;"
+                db_rows= self.showGeneralItem(query)
+                for row in db_rows:
+                    self.tree.insert('', 0,text=row[2],values=(row[1],row[3],row[4]))
+        def viewMember(self):
+            member= self.tree.get_children()
+            for element in member:
+                self.tree.delete(element)
+                query= "SELECT * FROM Member ;"
+                db_rows= self.showMember(query)
+                for row in db_rows:
+                    self.tree.insert('', 0,text=row[2],values=(row[1],row[3],row[4]))
+
+        def viewCategories(self):
+            categories = self.tree.get_children()
+            for element in categories:
+                self.tree.delete(element)
+                query = "SELECT * FROM Categories ;"
+                db_rows = self.showCategories(query)
+                for row in db_rows:
+                    self.tree.insert('', 0, text=row[2], values=(row[1], row[3], row[4]))
+
+        def viewAgeresItem(self):
+            resitem = self.tree.get_children()
+            for element in resitem:
+                self.tree.delete(element)
+                query = "SELECT * FROM AgeRestrictedItem ;"
+                db_rows = self.showAgeRestrictedItem(query)
+                for row in db_rows:
+                    self.tree.insert('', 0, text=row[1], values=(row[2], row[3], row[4],row[5]))
+            
 
 
 LoginWindow(Tk())
